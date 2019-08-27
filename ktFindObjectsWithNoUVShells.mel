@@ -1,19 +1,22 @@
 global proc ktFindObjectsWithNoUVShells()
 {
-   string $ObjectsWithNoUVShells[]; 
+   string $ObjectsWithNoUVShells[];
+   clear($ObjectsWithNoUVShells);
    $OldSel=`ls -type "mesh"`;
    
    for($e in $OldSel)
    {
-     evalDeferred("select "+$e);
+     select $e;
      
      $shell_count=`polyEvaluate -uvShell`;
      if($shell_count[0]==0)
+     {
      $sz=size($ObjectsWithNoUVShells);
      $ObjectsWithNoUVShells[$sz]=$e;
+     }
    }
    
    select -cl;
-   select $ObjectsWithNoUVShells;
-    
+   select $ObjectsWithNoUVShells; 
 }
+ktFindObjectsWithNoUVShells();
